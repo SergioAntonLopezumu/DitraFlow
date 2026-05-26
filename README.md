@@ -18,3 +18,35 @@ La plataforma permite:
 - Interactuar con un asistente inteligente orientado a digitalización empresarial.
 
 ---
+
+# Tecnologías utilizadas
+
+## Backend
+- Java 21
+- Spring Boot
+- Spring Data JPA
+- Hibernate
+- Maven
+- PostgreSQL
+
+## Frontend
+- React
+- TypeScript
+- Vite
+- CSS Modules
+- Framer Motion
+
+---
+
+# Características principales
+
+- Sistema de autenticación
+- Encuestas dinámicas
+- Dashboard interactivo
+- Diseño responsive (desktop, tablet y móvil)
+- Generación automática de objetivos
+- Predicción de éxito en digitalización
+- Interfaz moderna y minimalista
+- Arquitectura cliente-servidor REST
+
+---
