@@ -1,0 +1,338 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.progressBar {
+  width: 100%;
+  height: 1rem;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.error {
+  background-color: #fee;
+  color: #c00;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border-left: 4px solid #c00;
+}
+
+.dimensionTabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.tab {
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.tab:hover {
+  border-color: #667eea;
+  background-color: #f9f9f9;
+}
+
+.tab.active {
+  border-color: #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.questionsContainer {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.questionsContainer h2 {
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.dimensionDesc {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.questionCard {
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.questionCard:hover {
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+.questionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.questionText {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  flex: 1;
+  
+}
+
+.area {
+  display: inline-block;
+  background-color: #667eea;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.scale {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+  gap: 0.5rem;
+}
+
+.scaleOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.scaleOption input {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  accent-color: #667eea;
+}
+
+.scaleLabel {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.scaleText {
+  text-align: center;
+  color: #666;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.selectedReadOnly {
+  background-color: #e0e7ff !important;
+  border: 1px solid #667eea !important;
+  border-radius: 6px;
+}
+
+.selectedReadOnly input[type="radio"]:disabled {
+  accent-color: #764ba2 !important; /* Usa el color púrpura de tu branding */
+  filter: drop-shadow(0px 0px 2px rgba(102, 126, 234, 0.5));
+  opacity: 1 !important; /* Evita que el navegador lo difumine por estar disabled */
+}
+
+.commentContainer {
+  margin-top: 1rem;
+}
+
+.comment {
+  width: 100%;
+  min-height: 60px;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+
+.comment:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.submitBtn {
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 📱 Optimizaciones y Adaptabilidad para Pantallas Móviles */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  /* Permite scroll horizontal fluido si las pestañas de dimensión se desbordan */
+  .dimensionTabs {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 0.5rem;
+    padding-bottom: 8px;
+    grid-template-columns: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab {
+    padding: 0.75rem 1.2rem;
+    flex: 0 0 auto;
+  }
+
+  .questionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  /* Transforma la escala Likert horizontal en una lista vertical limpia */
+  .scale {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .scaleOption {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    background-color: #fcfcfc;
+  }
+
+  .scaleOption input {
+    margin-bottom: 0;
+  }
+
+  .scaleText {
+    text-align: left;
+    margin-top: 0;
+    display: inline-block;
+  }
+
+  .questionsContainer {
+    padding: 1rem;
+  }
+}
+
+/* 📳 Animación de Vibración por Error */
+.shakeAnimation {
+  animation: shakeEffect 0.5s ease-in-out;
+}
+
+@keyframes shakeEffect {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+  20%, 40%, 60%, 80% { transform: translateX(6px); }
+}
+
+/* 🚨 Resaltado rojo para Tarjetas de Preguntas No Respondidas */
+.unansweredHighlight {
+  border: 2px solid #ef4444 !important;
+  background-color: #fef2f2 !important;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.15);
+}
+
+/* ⚠️ Alerta visual sutil en las pestañas superiores que contienen errores */
+.tabErrorAlert {
+  border-color: #fca5a5 !important;
+  background-color: #fff5f5 !important;
+  color: #b91c1c !important;
+}

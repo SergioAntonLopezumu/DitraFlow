@@ -1,0 +1,527 @@
+/* src/styles/Dashboard.module.css */
+
+.container {
+  width: 100vw;
+  height: 100vh;      /* Ocupa el alto exacto de la pantalla */
+  display: flex;
+  background: #020617;
+  color: #e5e7eb;
+  overflow: hidden;   /* Congela la pantalla global para evitar saltos de scroll */
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  height: 100%;       /* Forzado al alto del contenedor */
+  background: rgba(15, 23, 42, 0.95);
+  border-right: 1px solid rgba(255,255,255,0.08);
+  padding: 2rem 1.2rem;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-shrink: 0;     /* Evita que el sidebar se encoja en pantallas medianas */
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* NAV ITEMS */
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  color: #cbd5f5;
+  background: linear-gradient(135deg, #081832, #010128);
+  font-weight: 500;
+  transition: all 0.25s ease;
+  position: relative; 
+}
+
+.navItem:hover {
+  transform: translateX(0.7rem);
+  color: white;
+  background: linear-gradient(135deg, #0b2042, #020256);
+}
+
+.activeIndicator {
+  position: absolute;
+  left: 0;
+  top: 0%;
+  bottom: 0%;
+  width: 4px;
+  background-color: white;
+  border-top-left-radius: 0.6rem;
+  border-bottom-left-radius: 0.6rem;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* MAIN: Aquí es donde aislamos el scroll de la encuesta */
+.main {
+  flex: 1;
+  height: 100%;       /* Toma el alto máximo disponible */
+  padding: 2rem;
+  overflow-y: auto;   /* 💡 Permite que solo la encuesta y las vistas hagan scroll vertical */
+  box-sizing: border-box;
+}
+
+/* HEADER */
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* CARD */
+.card {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 1.2rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(15px);
+  transition: all 0.3s ease;
+}
+
+/* CHAT */
+.chatBox {
+  height: 300px;
+  border-radius: 1rem;
+  background: rgba(2, 6, 23, 0.8);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 1rem;
+}
+
+/* LOCK */
+.lockedOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+}
+
+.lockBox {
+  text-align: center;
+  max-width: 420px;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background: rgba(15, 23, 42, 1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 1;
+}
+
+.lockTitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.lockText {
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
+}
+
+.button {
+  padding: 0.9rem 1.2rem;
+  border-radius: 0.75rem;
+  border: none;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #4f46e5, #3b82f6);
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+}
+
+.button:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+}
+
+/* DISABLED CONTENT */
+.disabled {
+  pointer-events: none;
+  filter: blur(6px);
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+/* BOTTOM BAR */
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  height: 70px;
+  background: rgba(15, 23, 42, 0.95);
+  border-top: 1px solid rgba(255,255,255,0.08);
+
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 100;
+}
+
+.bottomItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.2rem;
+  cursor: pointer;
+  color: #94a3b8;
+
+  transition: all 0.25s ease;
+}
+
+.bottomItem:hover {
+  transform: translateY(-2px);
+}
+
+.bottomItem span {
+  font-size: 0.75rem;
+}
+
+.icon {
+  font-size: 1.4rem;
+}
+
+.viewContainer {
+  transition: all 0.3s ease;
+}
+
+/* ENTRADA */
+.fadeIn {
+  animation: fadeIn 0.25s ease forwards;
+}
+
+/* SALIDA */
+.fadeOut {
+  animation: fadeOut 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+}
+
+/* MOBILE + TABLET */
+@media (max-width: 1024px) {
+  .sidebar {
+    display: none;
+  }
+
+  .bottomBar {
+    display: flex;
+  }
+
+  .main {
+    height: calc(100vh - 70px); /* Ajusta el alto restando la barra inferior */
+    padding-bottom: 80px;
+  }
+
+  .lockedOverlay {
+    top: 0;
+    bottom: 70px;
+    height: auto;
+  }
+}
+
+/* DESKTOP */
+@media (min-width: 1025px) {
+  .sidebar {
+    display: flex;
+  }
+
+  .bottomBar {
+    display: none;
+  }
+}
+
+/* HORIZONTAL MOBILE/TABLET */
+@media (max-width: 1024px) and (orientation: landscape) {
+  .main {
+    padding: 1rem 1.5rem 90px 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .bottomBar {
+    height: 60px;
+  }
+
+  .bottomItem {
+    flex-direction: row;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+  }
+
+  .bottomItem span {
+    font-size: 0.8rem;
+  }
+}
+
+/* TABLET */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .title {
+    font-size: 2.2rem;
+  }
+
+  .bottomItem {
+    font-size: 2rem;
+  }
+
+  .icon {
+    font-size: 1.6rem;
+  }
+}
+
+/* FLOATING BUBBLE */
+.floatingBubble {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
+  z-index: 50;
+  transition: all 0.3s ease;
+}
+
+.floatingBubble:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.7);
+}
+
+.floatingBubble:active {
+  transform: scale(0.95);
+}
+
+.bubbleIcon {
+  font-size: 1.8rem;
+}
+
+/* MOBILE BUBBLE ADJUSTMENT */
+@media (max-width: 1024px) {
+  .floatingBubble {
+    bottom: 90px;
+  }
+}
+
+/* CHAT MODAL */
+.chatOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+.chatModalWindow {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 440px;            /* 💡 Un pelín más ancho para que los mensajes respiren */
+  height: 650px;           /* 💡 Más alto para que quepa mucha más conversación */
+  background: #0f172a;     /* 💡 Color sólido slate-900 para evitar transparencias raras con el fondo */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: bottom right;
+  overflow: hidden;        /* 💡 Evita que los componentes hijos rompan las esquinas redondeadas */
+}
+
+/* CABECERA ENRIQUECIDA */
+.chatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.2rem; /* Un pelín más compacto para priorizar los mensajes */
+  background: #1e293b;   /* Tono slate-800 */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chatHeaderInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.chatHeaderEmoji {
+  font-size: 1.8rem; /* Tamaño idóneo para sustituir el avatar grande */
+  line-height: 1;
+}
+
+.chatHeaderTitleText {
+  display: flex;
+  flex-direction: column;
+}
+
+.chatHeaderTitleText h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.chatHeaderTitleText p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #94a3b8; /* Texto secundario slate-400 */
+  font-weight: 400;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.closeButton:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+/* CONTENEDOR DE MENSAJES DIRECTO */
+.chatContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #0f172a; /* Slate-900 directo, limpio y sin cajas blancas flotantes */
+  overflow: hidden;
+  height: 100%;
+}
+
+/* ANIMACIÓN SLIDE UP */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: scale(0.3) translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* MOBILE MODAL ADJUSTMENTS */
+@media (max-width: 1024px) {
+  .chatModalWindow {
+    bottom: 90px;
+    right: 10px;
+    left: 10px;
+    width: auto;
+    height: 70vh;
+    max-height: 500px;
+    border-radius: 1.2rem;
+  }
+
+  .chatHeader {
+    padding: 1rem;
+  }
+
+  .chatHeader h2 {
+    font-size: 1.1rem;
+  }
+
+  .chatContainer {
+    padding: 1rem;
+  }
+}
+
+/* TABLET */
+@media (max-width: 768px) {
+  .chatModalWindow {
+    bottom: 85px;
+    right: 5px;
+    left: 5px;
+    height: 100vh;
+    height: 100dvh;
+    max-height: calc(100dvh - 100px);
+    border-radius: 1rem;
+  }
+
+  .chatContainer {
+    padding: 0;
+  }
+}
