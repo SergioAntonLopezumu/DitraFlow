@@ -247,7 +247,30 @@ export const apiService = {
       const response = await fetch(`${BASE_URL}/admin/survey/rename`, {
         method: "PUT",
         headers: getHeaders(),
-        body: JSON.stringify({ name: newName }) // O el formato de DTO que espere tu Spring Boot
+        body: JSON.stringify({ name: newName })
+      });
+      return handleResponse(response);
+    },
+
+    deleteUser: async (userId: number) => {
+      const response = await fetch(`${BASE_URL}/admin/user/${userId}`, {
+        method: "DELETE",
+        headers: getHeaders()
+      });
+      return handleResponse(response);
+    },
+
+    deleteUserData: async (userId: number) => {
+      const response = await fetch(`${BASE_URL}/admin/user/${userId}/data`, {
+        method: "DELETE",
+        headers: getHeaders()
+      });
+      return handleResponse(response);
+    },
+
+    getUserDetails: async (userId: number) => {
+      const response = await fetch(`${BASE_URL}/admin/user/${userId}/details`, {
+        headers: getHeaders()
       });
       return handleResponse(response);
     },
