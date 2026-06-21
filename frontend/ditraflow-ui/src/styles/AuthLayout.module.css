@@ -1,0 +1,121 @@
+.authContainer {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* PANEL IZQUIERDO */
+.leftPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem;
+  background: radial-gradient(circle at top left, #1e293b, #020617);
+}
+
+.leftTitle {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.leftSubtitle {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  max-width: 400px;
+}
+
+/* PANEL DERECHO */
+.authContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* CARD CONTENEDOR */
+.authCard {
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+
+  animation: fadeIn 0.6s ease;
+
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
+}
+
+.childrenWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* TEXTO SWITCH LOGIN/REGISTER */
+.switchText {
+  margin-top: 1.2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.switchText span {
+  color: #3b82f6;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* ANIMACIÓN */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-aspect-ratio: 1/1) {
+  .authContainer {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .leftPanel {
+    display: none;
+  }
+
+  .authContent {
+    max-width: 100%;
+    min-height: 100%;
+    padding: 1.5rem 1rem;
+  }
+
+  .childrenWrapper {
+    width: 100%;
+    height: 100%;
+  }
+}

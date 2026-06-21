@@ -1,0 +1,84 @@
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+**/.idea/
+.history/
+*.code-workspace
+*.iml
+*.iws
+*.ipr
+*.swp
+*.swo
+*~
+
+# Build & Dependencies
+target/
+build/
+dist/
+node_modules/
+.gradle/
+.mvn/wrapper/maven-wrapper.jar
+*.jar
+*.war
+*.ear
+*.log
+.apt_generated/
+
+# Frontend Build
+frontend/ditraflow-ui/dist/
+frontend/ditraflow-ui/build/
+
+# Environment & Config
+.env
+.env.local
+.env.*.local
+*.properties.local
+
+# Test Output
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+.nyc_output/
+.mocha_output/
+
+# Project Docs (not needed in repo)
+ARQUITECTURA.md
+DOCUMENTACION_TFG.md
+IMPLEMENTACION_COMPLETADA.md
+ROADMAP_FIXES_SUMMARY.md
+SURVEY_ROADMAP_IMPROVEMENTS.md
+TESTING_GUIDE.md
+TESTING_QUICK_START.md
+ENDPOINT_TESTING.md
+SCRIPT_BASH_ANALYSIS.md
+
+# Test Scripts
+test_endpoints.sh
+test_use_cases_endpoints.sh
+test_simple.sh
+verify_questions.sql
+
+# Docker Compose (local only)
+compose.yaml
+backend/Dockerfile
+
+# Log patterns
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+*.json
+
+.gitattributes
+.gitignore
+application-test.properties

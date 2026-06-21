@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: #020617;
+  color: #e5e7eb;
+}
+
+/* opcional: suavizar texto */
+html {
+  scroll-behavior: smooth;
+}
+
+/* TAMAÑO MÍNIMO APP */
+#root {
+  min-width: 320px;
+  min-height: 600px;
+}
+
+/* ANIMACIÓN GLOBAL */
+.fadeIn {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* MODO "MOVIL FORZADO" (pantallas altas) */
+@media (max-aspect-ratio: 3/4) {
+  .appContainer {
+    max-width: 480px;
+    margin: auto;
+  }
+}
+
+/* CONTENEDOR APP */
+.appContainer {
+  min-width: 320px;
+  min-height: 500px;
+}
