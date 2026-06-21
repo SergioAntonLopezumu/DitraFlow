@@ -37,13 +37,13 @@ public class AdminController {
         List<User> users = userRepository.findAll();
         List<AdminUserLogDTO> logs = users.stream().map(user -> {
             AdminUserLogDTO dto = new AdminUserLogDTO();
+            dto.setId(user.getId());
             dto.setEmail(user.getEmail());
             dto.setCompanyName(user.getCompanyName());
             List<Result> results = resultRepository.findByUser(user);
             dto.setResults(results);
             dto.setChatHistory(chatHistoryRepository.findByUserOrderByTimestampDesc(user));
             
-            // Extraer roadmaps desde los resultados
             List<Roadmap> roadmaps = new ArrayList<>();
             for (Result result : results) {
                 if (result.getRoadmap() != null) {
@@ -58,11 +58,56 @@ public class AdminController {
         return ResponseEntity.ok(logs);
     }
 
+    @DeleteMapping("/user/{userId}")
+    @Transactional
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).body("Usuario no encontrado");
+        }
+        userRepository.deleteById(userId);
+        return ResponseEntity.ok("Usuario eliminado exitosamente");
+    }
+
+    @DeleteMapping("/user/{userId}/data")
+    @Transactional
+    public ResponseEntity<String> deleteUserData(@PathVariable Long userId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).body("Usuario no encontrado");
+        }
+        User user = userOpt.get();
+        resultRepository.deleteAll(resultRepository.findByUser(user));
+        chatHistoryRepository.deleteAll(chatHistoryRepository.findByUserOrderByTimestampDesc(user));
+        return ResponseEntity.ok("Datos del usuario eliminados exitosamente");
+    }
+
+    @GetMapping("/user/{userId}/details")
+    public ResponseEntity<?> getUserDetails(@PathVariable Long userId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).body("Usuario no encontrado");
+        }
+        User user = userOpt.get();
+        AdminUserLogDTO dto = new AdminUserLogDTO();
+        dto.setEmail(user.getEmail());
+        dto.setCompanyName(user.getCompanyName());
+        dto.setResults(resultRepository.findByUser(user));
+        dto.setChatHistory(chatHistoryRepository.findByUserOrderByTimestampDesc(user));
+        
+        List<Roadmap> roadmaps = new ArrayList<>();
+        for (Result result : dto.getResults()) {
+            if (result.getRoadmap() != null) {
+                roadmaps.add(result.getRoadmap());
+            }
+        }
+        dto.setRoadmaps(roadmaps);
+        return ResponseEntity.ok(dto);
+    }
+
     @DeleteMapping("/database/reset")
     @Transactional
     public ResponseEntity<String> resetDatabase() {
-        // Al tener @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true) en User,
-        // esto disparará el borrado en cascada de todos los datos hijos.
         userRepository.deleteAll();
         return ResponseEntity.ok("Base de datos reseteada exitosamente.");
     }

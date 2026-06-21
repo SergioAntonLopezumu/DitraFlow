@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 @Data
 public class AdminUserLogDTO {
+    private Long id;
     private String email;
     private String companyName;
     private List<Result> results;

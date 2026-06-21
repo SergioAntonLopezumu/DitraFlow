@@ -13,10 +13,12 @@ interface AdminStats {
 }
 
 interface UserLog {
+  id?: number;
   email: string;
   companyName: string;
   results?: any[];
   roadmaps?: any[];
+  chatHistory?: any[];
   hasCompletedSurvey?: boolean;
 }
 
@@ -29,7 +31,7 @@ interface Question {
 }
 
 type MainView = "users" | "surveys_management";
-type SubView = "dashboard" | "survey" | "roadmap" | "settings";
+type SubView = "dashboard" | "survey" | "roadmap" | "chat" | "settings";
 
 export default function AdminPanel() {
   // Estados de datos globales
@@ -39,6 +41,7 @@ export default function AdminPanel() {
   const [loading, setLoading] = useState<boolean>(true);
   const [resetting, setResetting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<boolean>(false);
 
   // Estados de interacción e itinerarios de vista
   const [mainView, setMainView] = useState<MainView>("users");
@@ -211,6 +214,46 @@ export default function AdminPanel() {
     });
     setMainView("users");
     setActiveSubView("dashboard");
+  };
+
+  const handleDeleteUser = async (userId: number, email: string) => {
+    const confirmed = window.confirm(
+      `¿ESTÁS SEGURO?\n\nEsto eliminará la cuenta completa de "${email}" y TODOS sus datos (resultados, roadmaps, chats).`
+    );
+    if (!confirmed) return;
+
+    try {
+      setDeleting(true);
+      await apiService.admin.deleteUser(userId);
+      alert(`Usuario ${email} eliminado correctamente.`);
+      setSelectedUser(null);
+      await loadAdminData();
+    } catch (err: any) {
+      console.error("Error al eliminar usuario:", err);
+      alert(`Error al eliminar usuario: ${err.message}`);
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const handleDeleteUserData = async (userId: number, email: string) => {
+    const confirmed = window.confirm(
+      `¿ESTÁS SEGURO?\n\nEsto eliminará todos los datos de "${email}" (resultados, roadmaps, chats) pero mantendrá la cuenta.`
+    );
+    if (!confirmed) return;
+
+    try {
+      setDeleting(true);
+      await apiService.admin.deleteUserData(userId);
+      alert(`Datos de ${email} eliminados correctamente.`);
+      setSelectedUser(null);
+      await loadAdminData();
+    } catch (err: any) {
+      console.error("Error al eliminar datos:", err);
+      alert(`Error al eliminar datos: ${err.message}`);
+    } finally {
+      setDeleting(false);
+    }
   };
 
   if (loading) {
@@ -567,13 +610,13 @@ export default function AdminPanel() {
               </div>
               
               <div className={styles.tabsContainer}>
-                {(["dashboard", "survey", "roadmap", "settings"] as SubView[]).map((v) => (
+                {(["dashboard", "survey", "roadmap", "chat", "settings"] as SubView[]).map((v) => (
                   <button
                     key={v}
                     onClick={() => setActiveSubView(v)}
                     className={`${styles.tabButton} ${activeSubView === v ? styles.tabButtonActive : ""}`}
                   >
-                    {v.toUpperCase()}
+                    {v === "chat" ? "💬 CHAT" : v.toUpperCase()}
                   </button>
                 ))}
               </div>
@@ -693,6 +736,51 @@ export default function AdminPanel() {
                 </div>
               )}
 
+              {/* SUBVIEW: CHAT HISTORY */}
+              {activeSubView === "chat" && (
+                <div>
+                  <h3 className={styles.sectionTitle}>Historial de Conversaciones con IA</h3>
+                  <p className={styles.userEmail} style={{ marginBottom: "1.5rem" }}>Registro completo de interacciones del usuario con el asistente contextualizado.</p>
+                  
+                  {selectedUser.chatHistory && selectedUser.chatHistory.length > 0 ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                      {selectedUser.chatHistory.map((msg: any, index: number) => (
+                        <div key={msg.id || index} style={{ background: "rgba(30, 41, 59, 0.3)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0.75rem", padding: "1.25rem", overflow: "hidden" }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "1rem" }}>
+                            <div>
+                              <span style={{ fontSize: "0.7rem", textTransform: "uppercase", background: "rgba(59, 130, 246, 0.1)", color: "#60a5fa", fontWeight: 700, padding: "0.25rem 0.5rem", borderRadius: "0.25rem", marginRight: "0.5rem" }}>
+                                Usuario
+                              </span>
+                              <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>
+                                {msg.timestamp ? new Date(msg.timestamp).toLocaleString() : "Sin fecha"}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div style={{ marginBottom: "1rem" }}>
+                            <p style={{ fontSize: "0.75rem", color: "#818cf8", fontWeight: 600, marginBottom: "0.5rem" }}>Pregunta:</p>
+                            <div style={{ background: "rgba(15, 23, 42, 0.4)", padding: "0.75rem", borderRadius: "0.375rem", borderLeft: "3px solid #3b82f6", fontSize: "0.875rem", color: "#e2e8f0", lineHeight: "1.5" }}>
+                              {msg.userMessage}
+                            </div>
+                          </div>
+
+                          <div>
+                            <p style={{ fontSize: "0.75rem", color: "#34d399", fontWeight: 600, marginBottom: "0.5rem" }}>Respuesta IA:</p>
+                            <div style={{ background: "rgba(15, 23, 42, 0.4)", padding: "0.75rem", borderRadius: "0.375rem", borderLeft: "3px solid #10b981", fontSize: "0.875rem", color: "#e2e8f0", lineHeight: "1.5", maxHeight: "300px", overflowY: "auto" }}>
+                              {msg.botResponse}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div style={{ textAlign: "center", padding: "2.5rem 0", border: "1px dashed rgba(255,255,255,0.08)", borderRadius: "0.75rem", color: "#64748b", fontSize: "0.875rem" }}>
+                      No hay conversaciones registradas para este usuario.
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* SUBVIEW: SETTINGS INTERNAS */}
               {activeSubView === "settings" && (
                 <div>
@@ -704,6 +792,58 @@ export default function AdminPanel() {
                     <button className={styles.secondaryAction} onClick={() => alert(`Notificación enviada a: ${selectedUser.email}`)}>
                       Enviar Notificación
                     </button>
+                  </div>
+
+                  <div style={{ marginTop: "2.5rem", paddingTop: "2.5rem", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+                    <h4 style={{ fontSize: "0.95rem", color: "#ff6b6b", fontWeight: 600, marginBottom: "1rem" }}>⚠️ Zona de Peligro</h4>
+                    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+                      <button 
+                        onClick={() => {
+                          if (selectedUser?.id) {
+                            handleDeleteUserData(selectedUser.id, selectedUser.email);
+                          }
+                        }}
+                        disabled={deleting}
+                        style={{ 
+                          padding: "0.6rem 1.5rem", 
+                          background: "rgba(239, 68, 68, 0.1)", 
+                          border: "1px solid rgba(239, 68, 68, 0.3)",
+                          color: "#fca5a5", 
+                          borderRadius: "0.375rem", 
+                          cursor: "pointer",
+                          fontWeight: 600,
+                          fontSize: "0.85rem",
+                          transition: "all 0.2s"
+                        }}
+                        onMouseOver={(e) => { e.currentTarget.style.background = "rgba(239, 68, 68, 0.2)"; }}
+                        onMouseOut={(e) => { e.currentTarget.style.background = "rgba(239, 68, 68, 0.1)"; }}
+                      >
+                        {deleting ? "Eliminando..." : "🗑️ Eliminar Datos del Usuario"}
+                      </button>
+                      <button 
+                        onClick={() => {
+                          if (selectedUser?.id) {
+                            handleDeleteUser(selectedUser.id, selectedUser.email);
+                          }
+                        }}
+                        disabled={deleting}
+                        style={{ 
+                          padding: "0.6rem 1.5rem", 
+                          background: "rgba(220, 38, 38, 0.2)", 
+                          border: "1px solid rgba(220, 38, 38, 0.5)",
+                          color: "#fecaca", 
+                          borderRadius: "0.375rem", 
+                          cursor: "pointer",
+                          fontWeight: 600,
+                          fontSize: "0.85rem",
+                          transition: "all 0.2s"
+                        }}
+                        onMouseOver={(e) => { e.currentTarget.style.background = "rgba(220, 38, 38, 0.3)"; }}
+                        onMouseOut={(e) => { e.currentTarget.style.background = "rgba(220, 38, 38, 0.2)"; }}
+                      >
+                        {deleting ? "Eliminando..." : "🚨 Eliminar Usuario Completo"}
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
