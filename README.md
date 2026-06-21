@@ -54,6 +54,6 @@ Aplicación **cliente-servidor en capas**, siguiendo el patrón **MVC**:
 
 El sistema se ha validado con una batería de **31 pruebas de integración** sobre los cinco casos de uso principales, con cobertura adicional de seguridad y aislamiento de datos.
 
-## 📄 Memoria
+## Memoria
 
 La memoria completa del TFG, con el estado del arte, el diseño del sistema y la comparación con las herramientas existentes, está disponible en este repositorio.
