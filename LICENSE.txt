@@ -1,0 +1,12 @@
+Copyright (c) 2026 Sergio Antón López
+
+Por la presente se otorga permiso, sin cargo, a los miembros del Tribunal Evaluador 
+de la Facultad de Informática de la Universidad de Murcia para visualizar y evaluar 
+este código fuente del prototipo exclusivamente con fines de calificación del Trabajo 
+de Fin de Grado (TFG) titulado:
+Factores de éxito en un proceso de digitalización de PYMES.
+
+QUEDA TERMINANTEMENTE PROHIBIDA la reproducción, copia, modificación, distribución,
+comercialización, sublicencia o uso de este software y su documentación para cualquier 
+otro propósito, público o privado, sin el consentimiento previo y por escrito del 
+titular de los derechos de autor.
